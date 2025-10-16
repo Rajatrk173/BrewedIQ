@@ -12,12 +12,14 @@ def mom_growth(data):
     )
     return fig
 
-def mon_data(data):
-   fig = go.Figure(data=go.Scatter(x=data.index.astype('str'), y=data.values))
+def moving_avg(data,data1):
+   fig = go.Figure()
+   fig.add_trace(go.Scatter(x=data.index.astype(str), y=data.values,mode='lines',name='lines'))
+   fig.add_trace(go.Scatter(x=data1.index.astype(str), y=data1.values,mode='lines+markers',name='lines+markers'))
    fig.update_layout(
-    width=500,  
-    height=400
-)
+   width=700,
+   height=800
+    )
    return fig
 
 def mon_sales(data):
@@ -134,10 +136,10 @@ def a_mom_grow(data):
     return fig
 
 def productcat_sales(data):
-    fig = go.Figure([go.Bar(x=data['product_category'], y=data['sales'])])
+    fig = go.Figure([go.Bar(x=data.index.astype('str'), y=data.values)])
     fig.update_layout(
         title = 'Product Category Distribution (by sales)',
-        xaxis_title = 'Total Sales',
+        xaxis_title = 'Total',
         yaxis_title = 'Product Category',
         width=500,  
         height=700
@@ -145,7 +147,7 @@ def productcat_sales(data):
     return fig
 
 def productcat_trans(data):
-    fig = go.Figure([go.Bar(x=data['product_category'], y= data['transaction_qty'])])
+    fig = go.Figure([go.Bar(x=data.index.astype('str'), y= data.values)])
     fig.update_layout(
         title = 'Product Category Distribution (by Transaction)',
         xaxis_title = 'Total Transaction',
@@ -153,21 +155,18 @@ def productcat_trans(data):
     )
     return fig
 
-def coffee_sales(data):
-    lables = data['product_type']
-    values = data['sales']
-    fig = go.Figure(data=[go.Pie(labels=lables , values=values,textinfo='label+percent',
+def coffee_sales(data, category):
+    fig = go.Figure(data=[go.Pie(labels=data[category].index.astype(str), values=data[category].values,textinfo='label+percent',
                              insidetextorientation='radial')])
     fig.update_layout(
-    title_text="Product Category (Coffee) Distribution by Sales",
-    width=300,  
-    height=400
+    title_text=f"Product Category ({category}) Distribution by Sales",
+  
 )
     return fig
 
 def tea_sales(data):
-    lables = data['product_type']
-    values = data['sales']
+    lables = data
+    values = data
     fig = go.Figure(data=[go.Pie(labels=lables , values=values,textinfo='label+percent',
                              insidetextorientation='radial')])
     
@@ -177,8 +176,8 @@ def tea_sales(data):
     return fig
 
 def bakery_sales(data):
-    lables = data['product_type']
-    values = data['sales']
+    lables = data
+    values = data
     fig = go.Figure(data=[go.Pie(labels=lables , values=values,textinfo='label+percent',
                              insidetextorientation='radial')])
     
